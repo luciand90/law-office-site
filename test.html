@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dummy client-site</title>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <script src="http://192.168.100.2:4200/client.js"></script>
+</head>
+<body>
+
+<button id="btn" onclick="btnHandler()">Logout</button>
+
+<hr/>
+
+<button onclick="getProfile()">Get profile</button>
+<button onclick="getUserId()">Get user id</button>
+<button onclick="createAccount()">Signup</button>
+
+
+<script>
+    const clientId = '228TQF';
+    let accessToken;
+    createAccount = function () {
+        Fitbit.fbCreateAccount(true);
+    };
+    setSession = function () {
+        Fitbit.fbGetCurrentAccessToken().then(
+            function (token) {
+                console.log("Current token:");
+                console.log(token);
+                accessToken = token;
+            })
+            .catch(function (error) {
+                console.log('fourth:' + error);
+            });
+    };
+
+    getProfile = function () {
+        if (!accessToken) {
+            alert('Not logged in');
+        } else {
+            Fitbit.fbGetCurrentAccessToken().then(
+                function (token) {
+                    accessToken = token;
+                    console.log("Get profile token:");
+                    console.log(token);
+                    $.ajax(
+                        {
+                            url: 'https://qa2api.fitbit.com/1/user/-/profile.json',
+                            headers: {
+                                Authorization: 'Bearer ' + accessToken
+                            },
+                            success: function (result) {
+                                alert(JSON.stringify(result));
+                            },
+                            error: function (error) {
+                                alert(JSON.stringify(error));
+                            }
+                        })
+                });
+        }
+    };
+    getUserId = function () {
+        Fitbit.fbGetUserId().then(function (result) {
+            alert(result);
+        });
+    };
+    window.onload = function () {
+        Fitbit.init(clientId);
+
+        Fitbit.fbIsUserAuthenticated()
+            .then(function (isAuthenticated) {
+                console.log(isAuthenticated);
+                if (isAuthenticated) {
+                    document.getElementById("btn").innerHTML = 'Logout';
+                    setSession();
+                } else {
+                    document.getElementById("btn").innerHTML = 'Login';
+                }
+            })
+            .catch(function () {
+                console.log('first isAuthenticated error: ' + isAuthenticated);
+            });
+        Fitbit.fbIsUserAuthenticated()
+            .then(function (isAuthenticated) {
+                console.log('second isAuthenticated success: ' + isAuthenticated);
+            })
+            .catch(function () {
+                console.log('second isAuthenticated error: ' + isAuthenticated);
+            });
+
+        btnHandler = function () {
+            Fitbit.fbIsUserAuthenticated(true).then(function (bool) {
+                if (bool) {
+                    Fitbit.fbLogUserOut();
+                }
+            });
+        };
+        Fitbit.fbUserLogOutCallback = function () {
+            Fitbit.fbIsUserAuthenticated(true);
+        };
+        Fitbit.fbTokenUpdatedCallback = function (token) {
+            accessToken = token;
+            console.log("Token updated:");
+            console.log(token)
+        };
+
+        Fitbit.fbUserSessionExpired = function () {
+            console.log("Session Expired, token could not be refreshed.");
+        }
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dummy client-site</title>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+</head>
+<iframe src="http://localhost:63342/law-office-site/test.html?_ijt=ja5a6ntg4vi21be9lhhdqmc1g6" style="display:none"></iframe>
+<body>
+
+<button id="btn" onclick="btnHandler()">Logout</button>
+
+<hr/>
+
+<button onclick="getProfile()">Get profile</button>
+<button onclick="getUserId()">Get user id</button>
+<button onclick="createAccount()">Signup</button>
+
+
+<script>
+   window.addEventListener('message', function(message){
+       console.log(message)
+   })
+</script>
+
+</body>
+</html>

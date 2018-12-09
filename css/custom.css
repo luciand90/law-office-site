@@ -1,0 +1,51 @@
+footer {
+    padding:0 !important;
+}
+.articles {
+    background-color: #314249;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    color: #fff;
+}
+.navbar-header {
+    padding: 10px;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.indented{
+    text-indent: 50px;
+}
+
+.btn-toggle{
+    padding: 20px;
+    text-align: center;
+}
+
+.copyright {
+    margin-top: 0;
+}
+.affix-top .btn-default:active:hover, .btn-default.active:hover, .open > .dropdown-toggle.btn-default:hover, .btn-default:active:focus, .btn-default.active:focus, .open > .dropdown-toggle.btn-default:focus, .btn-default:active.focus, .btn-default.active.focus, .open > .dropdown-toggle.btn-default.focus {
+    color: black;
+    background-color: white;
+    border-color: white;
+}
+
+.affix-top .btn-primary {
+    color: white;
+    background-color: black;
+    border-color: white;
+}
+
+/*.affix-top .btn-primary {*/
+    /*background-color: white;*/
+    /*color: black;*/
+/*}*/
+
+/*.affix-top .btn-default {*/
+    /*background-color: black;*/
+    /*color:white;*/
+/*}*/
